@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Web Notes",
+  "version": "1.0",
+  "description": "Add notes to web pages and save text selections",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "dist/popup.html",
+    "xdefault_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "xservice_worker": "dist/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScript.js"
+      ]
+    }
+  ]
+}
