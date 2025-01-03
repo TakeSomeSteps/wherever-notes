@@ -17,14 +17,29 @@ const Popup = () => {
   const [selectedText, setSelectedText] = useState('');
 
   useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (selection) {
+        const text = selection.toString().trim(); // Trim whitespace
+        setSelectedText(text || ""); // Set null if empty
+      }
+    };
+
+    // Listen for selection changes on the document
+    document.addEventListener('mouseup', handleSelectionChange);
+    document.addEventListener('keyup', handleSelectionChange);
+    document.addEventListener('selectionchange', handleSelectionChange)
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mouseup', handleSelectionChange);
+      document.removeEventListener('keyup', handleSelectionChange);
+      document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
+
+  useEffect(() => {
     checkAuth();
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'getSelection' }, (response) => {
-        if (response && response.selectedText) {
-          setSelectedText(response.selectedText);
-        }
-      });
-    });
   }, []);
 
   const checkAuth = async () => {
@@ -38,7 +53,7 @@ const Popup = () => {
 
   const handleLogin = async () => {
     try {
-      await account.createOAuth2Session('google');
+      await account.createOAuth2Session('google', 'http://localhost:3000/', 'http://localhost:3000/auth/failure', ['profile', 'email']);
     } catch (error) {
       console.error('Login failed', error);
     }

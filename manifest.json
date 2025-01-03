@@ -8,7 +8,7 @@
     "storage"
   ],
   "action": {
-    "default_popup": "dist/popup.html",
+    "default_popup": "dist/index.html",
     "xdefault_icon": {
       "16": "icon16.png",
       "48": "icon48.png",

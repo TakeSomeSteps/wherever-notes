@@ -16,6 +16,12 @@ module.exports = () => {
     mode: mode, // Add mode here
     devtool: mode === 'development' ? 'inline-source-map' : false, // Add source maps
 
+    devServer: {
+      static: './dist',
+      hot: true,
+      port: 3000
+    },
+
     entry: {
       popup: './App.tsx',
       background: './background.js',
