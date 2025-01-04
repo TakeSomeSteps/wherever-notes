@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Popup from './popup';
+import Popup from './src/popup';
 
 function MyComponent() {
   return (
